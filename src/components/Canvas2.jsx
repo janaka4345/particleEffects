@@ -47,8 +47,8 @@ export default function Canvas1() {
       ctx.fillStyle = "#ff0000";
       ctx.beginPath();
       ctx.arc(
-        (particle.x += particle.speedX + force),
-        (particle.y += particle.speedY + force),
+        (particle.x += particle.speedX + force * Math.cos(angle)),
+        (particle.y += particle.speedY + force * Math.sin(angle)),
         particle.radius,
         0,
         2 * Math.PI,
@@ -63,6 +63,8 @@ export default function Canvas1() {
 
       // for (let index = i; index < particleArrayRef.current.length; index++) {
     });
+    mousePosition.current.x = undefined;
+    mousePosition.current.y = undefined;
   }
   function handleClick(e) {
     mousePosition.current.x = e.clientX;
