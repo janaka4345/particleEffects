@@ -4,6 +4,7 @@ const useCanvas = (draw) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    console.log("usecanvas effect ran");
     const canvas = canvasRef.current;
     const handleResize = () => {
       canvas.width = 500;
@@ -18,6 +19,7 @@ const useCanvas = (draw) => {
     let animationFrameId;
 
     const render = () => {
+      // console.log(frameCount);
       frameCount++;
       draw(context, frameCount, ratio);
       animationFrameId = window.requestAnimationFrame(render);
