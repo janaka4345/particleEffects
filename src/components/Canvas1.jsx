@@ -1,14 +1,18 @@
 import { useEffect, useMemo } from "react";
 import useCanvas from "./useCanvas";
 let ParticlesArray = [];
+const particleCount = 20;
 export default function Canvas1(props) {
+  const canvasRef = useCanvas(draw);
+  //created the particles
   ParticlesArray = useMemo(() => {
+    console.log("memo ran");
     const ParticlesArray = [];
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < particleCount; index++) {
       const particle = {
         x: Math.random() * 500,
         y: Math.random() * 250,
-        size: Math.floor((Math.random() + 1) * 10),
+        radius: Math.floor((Math.random() + 1) * 5),
       };
       ParticlesArray.push(particle);
     }
@@ -16,10 +20,8 @@ export default function Canvas1(props) {
   }, []);
 
   useEffect(() => {
-    console.log(ParticlesArray);
+    // console.log(canvasRef.current);
   }, []);
-
-  const canvasRef = useCanvas(draw);
 
   return (
     <>
@@ -29,16 +31,25 @@ export default function Canvas1(props) {
 }
 const draw = (ctx, frameCount, ratio) => {
   ctx.clearRect(0, 0, ctx.canvas.width * ratio, ctx.canvas.height * ratio);
-  ParticlesArray.forEach((particle) => {
+  /// hande the paticles
+  ParticlesArray.forEach((particle, i) => {
+    for (let index = i; index < ParticlesArray.length; index++) {
+      if (
+        Math.hypot(
+          particle.x - ParticlesArray[index].x,
+          particle.y - ParticlesArray[index].y,
+        ) < 100
+      ) {
+        ctx.beginPath();
+        ctx.moveTo(particle.x, particle.y);
+        ctx.lineTo(ParticlesArray[index].x, ParticlesArray[index].y);
+        ctx.stroke();
+        ctx.strokeStyle = "#00ff00";
+      }
+    }
     ctx.fillStyle = "#ff0000";
     ctx.beginPath();
-    ctx.arc(
-      particle.x,
-      particle.y,
-      particle.size * Math.sin(frameCount * 0.05) ** 2,
-      0,
-      2 * Math.PI,
-    );
+    ctx.arc(particle.x, particle.y, particle.radius, 0, 2 * Math.PI);
     ctx.fill();
   });
 };
