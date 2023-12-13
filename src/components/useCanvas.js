@@ -6,15 +6,14 @@ const useCanvas = (draw) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = 500;
+      canvas.height = 250;
     };
     handleResize();
     window.addEventListener("resize", handleResize);
 
     const { devicePixelRatio: ratio = 1 } = window;
     const context = canvas.getContext("2d");
-    console.log(context);
     let frameCount = 0;
     let animationFrameId;
 
