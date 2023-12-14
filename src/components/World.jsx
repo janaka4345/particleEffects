@@ -9,6 +9,7 @@ export default function World(props) {
 
       {/*  consolation*/}
       <Canvas2 />
+      {/* <h1>hi</h1> */}
     </>
   );
 }
