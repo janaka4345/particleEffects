@@ -42,8 +42,9 @@ export default function Canvas1() {
       const dx = mousePosition.current.x - particle.x;
       const dy = mousePosition.current.y - particle.y;
       const distance = Math.hypot(dy, dx);
-      const angle = Math.atan2(particle.y, particle.x);
-      distance < 50 ? (force = 3) : null;
+      const angle = Math.atan2(dy, dx);
+      // console.log(angle);
+      distance < 50 ? (force = 50) : null;
       ctx.fillStyle = "#ff0000";
       ctx.beginPath();
       ctx.arc(
